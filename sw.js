@@ -1,1 +1,19 @@
-self.addEventListener('install', (e) => { e.waitUntil(caches.open('afrika-hub-cache').then((cache) => cache.addAll(['/','index.html'])); }); self.addEventListener('fetch', (e) => { e.respondWith(caches.match(e.request).then((response) => response || fetch(e.request))); });
+const CACHE_NAME = 'afrika-hub-v1';
+const urlsToCache = [
+  '/afrika-hub/',
+  '/afrika-hub/index.html'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => response || fetch(event.request))
+  );
+});

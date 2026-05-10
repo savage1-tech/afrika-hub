@@ -1,1 +1,22 @@
-{"name":"AFRIKA HUB","short_name":"AfrikaHub","description":"Pan-African Escrow E-commerce","start_url":"/","display":"standalone","background_color":"#000000","theme_color":"#10b981","icons":[{"src":"https://via.placeholder.com/192","sizes":"192x192","type":"image/png"},{"src":"https://via.placeholder.com/512","sizes":"512x512","type":"image/png"}]}
+{
+  "name": "AFRIKA HUB",
+  "short_name": "AfrikaHub",
+  "description": "Africa's Trusted Escrow E-commerce Marketplace",
+  "start_url": "/afrika-hub/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#10b981",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192x192/10b981/ffffff?text=AH",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/10b981/ffffff?text=AH",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

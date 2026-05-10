@@ -3,242 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AFRIKA HUB - Secure Escrow Marketplace</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>AFRIKA HUB - Buy & Sell Safely</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10b981">
+    <link rel="apple-touch-icon" href="https://via.placeholder.com/180x180/10b981/ffffff?text=AH">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/afrika-hub/sw.js')
+                    .then(reg => console.log('SW registered'))
+                    .catch(err => console.log('SW error', err));
+            });
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@700&display=swap');
-        body { font-family: 'Inter', system-ui, sans-serif; }
-        .hero-bg { background: linear-gradient(135deg, #0a0a0a, #1a3c2e); }
-        .product-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
-        .nav-active { color: #22c55e; border-bottom: 3px solid #22c55e; }
-        .chat-bubble { animation: bubble 0.3s ease; }
-        @keyframes bubble { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        body { font-family: system-ui; background: #0a0a0a; color: white; text-align: center; padding: 50px; }
+        h1 { color: #10b981; }
     </style>
 </head>
-<body class="bg-zinc-950 text-white">
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-zinc-900 border-b border-zinc-800">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center text-2xl">🌍</div>
-                <div>
-                    <h1 class="text-2xl font-bold tracking-tight">AFRIKA HUB</h1>
-                    <p class="text-xs text-emerald-400 -mt-1">Escrow • Secure • Africa</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-4">
-                <div onclick="toggleAI()" class="flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded-3xl cursor-pointer transition-colors">
-                    <i class="fa-solid fa-robot"></i>
-                    <span class="text-sm font-medium">AfriAI</span>
-                </div>
-                <div class="w-9 h-9 bg-zinc-700 rounded-full flex items-center justify-center cursor-pointer">
-                    👤
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-zinc-900 border-t border-zinc-800 z-50 md:hidden">
-        <div class="max-w-7xl mx-auto flex justify-around py-2">
-            <a href="#" onclick="switchTab(0)" class="nav-item flex flex-col items-center text-emerald-400">
-                <i class="fa-solid fa-house text-xl"></i>
-                <span class="text-xs mt-1">Home</span>
-            </a>
-            <a href="#" onclick="switchTab(1)" class="nav-item flex flex-col items-center text-zinc-400 hover:text-white">
-                <i class="fa-solid fa-store text-xl"></i>
-                <span class="text-xs mt-1">Shop</span>
-            </a>
-            <a href="#" onclick="switchTab(2)" class="nav-item flex flex-col items-center text-zinc-400 hover:text-white">
-                <i class="fa-solid fa-hand-holding-dollar text-xl"></i>
-                <span class="text-xs mt-1">Sell</span>
-            </a>
-            <a href="#" onclick="switchTab(3)" class="nav-item flex flex-col items-center text-zinc-400 hover:text-white">
-                <i class="fa-solid fa-shield-halved text-xl"></i>
-                <span class="text-xs mt-1">Escrow</span>
-            </a>
-            <a href="#" onclick="switchTab(4)" class="nav-item flex flex-col items-center text-zinc-400 hover:text-white">
-                <i class="fa-solid fa-user text-xl"></i>
-                <span class="text-xs mt-1">Me</span>
-            </a>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 pb-20 md:pb-8">
-        <!-- Hero -->
-        <div class="hero-bg rounded-3xl p-8 mt-6 text-center">
-            <h2 class="text-5xl font-bold mb-4 leading-tight">Buy & Sell Safely Across Africa</h2>
-            <p class="text-xl text-emerald-300 max-w-md mx-auto">Funds held in escrow until you confirm delivery. Protected by AfriAI.</p>
-            <div class="mt-8 flex flex-wrap gap-4 justify-center">
-                <button onclick="startShopping()" class="bg-emerald-500 hover:bg-emerald-600 px-10 py-4 rounded-2xl text-lg font-semibold flex items-center gap-3">
-                    Start Shopping <i class="fa-solid fa-arrow-right"></i>
-                </button>
-                <button onclick="toggleAI()" class="border border-emerald-500 hover:bg-white/10 px-8 py-4 rounded-2xl text-lg font-semibold">
-                    Ask AfriAI
-                </button>
-            </div>
-        </div>
-
-        <!-- Marketplace -->
-        <div class="mt-10">
-            <div class="flex justify-between items-end mb-6">
-                <h3 class="text-2xl font-semibold">Featured Marketplace</h3>
-                <button onclick="alert('Search coming soon!')" class="text-emerald-400 flex items-center gap-2">
-                    See all <i class="fa-solid fa-chevron-right"></i>
-                </button>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="products">
-                <!-- Products populated by JS -->
-            </div>
-        </div>
-    </main>
-
-    <!-- AI Chat Modal -->
-    <div id="aiModal" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-end md:items-center justify-center">
-        <div class="bg-zinc-900 w-full max-w-lg md:rounded-3xl rounded-t-3xl h-[85vh] md:h-auto flex flex-col">
-            <div class="p-4 border-b border-zinc-800 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center">🤖</div>
-                    <div>
-                        <div class="font-semibold">AfriAI Assistant</div>
-                        <div class="text-xs text-emerald-400">Always here to help</div>
-                    </div>
-                </div>
-                <button onclick="toggleAI()" class="text-zinc-400 hover:text-white">
-                    <i class="fa-solid fa-xmark text-2xl"></i>
-                </button>
-            </div>
-
-            <div id="chatMessages" class="flex-1 p-4 overflow-y-auto space-y-4 bg-zinc-950">
-                <!-- Messages added by JS -->
-            </div>
-
-            <div class="p-4 border-t border-zinc-800">
-                <div class="flex gap-3">
-                    <input id="chatInput" type="text" placeholder="Ask about products, escrow, shipping..." 
-                           class="flex-1 bg-zinc-800 rounded-3xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                           onkeypress="if(event.key==='Enter') sendMessage()">
-                    <button onclick="sendMessage()" class="w-14 h-14 bg-emerald-500 rounded-3xl flex items-center justify-center">
-                        <i class="fa-solid fa-paper-plane"></i>
-                    </button>
-                </div>
-                <div class="text-center text-[10px] text-zinc-500 mt-3">Secure • Private • Helpful</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Escrow Success Toast -->
-    <div id="toast" class="hidden fixed bottom-24 left-1/2 -translate-x-1/2 bg-emerald-600 text-white px-8 py-4 rounded-3xl shadow-2xl flex items-center gap-3">
-        <i class="fa-solid fa-check-circle text-2xl"></i>
-        <div>
-            <div class="font-semibold">Escrow Activated!</div>
-            <div class="text-sm opacity-90">Funds held safely until delivery confirmed.</div>
-        </div>
-    </div>
-
-    <script>
-        // Sample Products
-        const products = [
-            { id: 1, name: "Handwoven Ankara Fabric", price: "₦12,500", location: "Lagos, Nigeria", img: "🧵", seller: "Mama textiles" },
-            { id: 2, name: "Organic Shea Butter", price: "$18", location: "Accra, Ghana", img: "🧴", seller: "Ghana Naturals" },
-            { id: 3, name: "Kente Cloth Premium", price: "₦28,000", location: "Kumasi, Ghana", img: "🪢", seller: "Ashanti Weavers" },
-            { id: 4, name: "Artisan Coffee Beans", price: "$25", location: "Addis Ababa, Ethiopia", img: "☕", seller: "Ethio Roast" }
-        ];
-
-        function renderProducts() {
-            const container = document.getElementById('products');
-            container.innerHTML = products.map(p => `
-                <div class="product-card bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-800">
-                    <div class="h-48 bg-zinc-800 flex items-center justify-center text-7xl">${p.img}</div>
-                    <div class="p-4">
-                        <div class="font-semibold text-lg">${p.name}</div>
-                        <div class="text-emerald-400 text-xl font-medium mt-1">${p.price}</div>
-                        <div class="text-xs text-zinc-400 mt-1">${p.location} • ${p.seller}</div>
-                        <button onclick="buyWithEscrow(${p.id})" 
-                                class="mt-4 w-full bg-white text-black hover:bg-emerald-400 hover:text-white py-3 rounded-2xl font-semibold text-sm transition-all">
-                            BUY WITH ESCROW
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function buyWithEscrow(id) {
-            const product = products.find(p => p.id === id);
-            if (confirm(`Proceed with escrow purchase of ${product.name} for ${product.price}?`)) {
-                showToast();
-            }
-        }
-
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.remove('hidden');
-            setTimeout(() => toast.classList.add('hidden'), 4000);
-        }
-
-        // AI Chat
-        let messages = [];
-        function toggleAI() {
-            const modal = document.getElementById('aiModal');
-            modal.classList.toggle('hidden');
-            if (!messages.length) {
-                addAIMessage("Hello! I'm AfriAI, your personal assistant on AFRIKA HUB. How can I help you today? (e.g. 'How does escrow work?')");
-            }
-        }
-
-        function addAIMessage(text) {
-            const chat = document.getElementById('chatMessages');
-            chat.innerHTML += `
-                <div class="chat-bubble flex gap-3">
-                    <div class="w-7 h-7 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex-shrink-0 flex items-center justify-center text-xs">AI</div>
-                    <div class="bg-zinc-800 rounded-3xl px-5 py-3 max-w-[80%]">${text}</div>
-                </div>
-            `;
-            chat.scrollTop = chat.scrollHeight;
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const text = input.value.trim();
-            if (!text) return;
-
-            const chat = document.getElementById('chatMessages');
-            chat.innerHTML += `
-                <div class="flex justify-end">
-                    <div class="bg-emerald-600 rounded-3xl px-5 py-3 max-w-[80%]">${text}</div>
-                </div>
-            `;
-            chat.scrollTop = chat.scrollHeight;
-            input.value = '';
-
-            // Simple AI responses
-            setTimeout(() => {
-                let reply = "Thanks for asking! ";
-                if (text.toLowerCase().includes('escrow')) reply = "Escrow means your money is held safely until you confirm the item arrived in good condition. We release funds to the seller only after that.";
-                else if (text.toLowerCase().includes('ship') || text.toLowerCase().includes('delivery')) reply = "We partner with reliable couriers across Africa. Typical delivery: 3-7 days within same country.";
-                else if (text.toLowerCase().includes('pay')) reply = "We support Paystack, Flutterwave, mobile money & more. All payments go through escrow.";
-                addAIMessage(reply);
-            }, 800);
-        }
-
-        function switchTab(n) {
-            alert('Tab ' + (['Home','Shop','Sell','Escrow','Profile'][n]) + ' clicked! Full navigation coming soon.');
-        }
-
-        function startShopping() {
-            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Initialize
-        window.onload = () => {
-            renderProducts();
-            // Make nav items active on mobile
-            console.log('%c✅ AFRIKA HUB MVP Loaded Successfully! Secure escrow demo ready.', 'color:#22c55e; font-size:14px');
-        };
-    </script>
+<body>
+    <h1>🌍 AFRIKA HUB</h1>
+    <p>Africa's Trusted Escrow Marketplace</p>
+    <p>Install this as a Beta App on your iPhone via Safari → Share → Add to Home Screen</p>
+    <button onclick="alert('Escrow flow & AI ready! Open on iPhone Safari for install')" style="background:#10b981;color:black;padding:15px 30px;border:none;border-radius:8px;font-size:18px;">
+        Try Demo
+    </button>
 </body>
 </html>
