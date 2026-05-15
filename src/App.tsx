@@ -21,31 +21,24 @@ function App() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
-
-  const services = [
-    { icon: '💬', label: 'Instant Messaging' },
-    { icon: '👥', label: 'Group Chats' },
-    { icon: '📷', label: 'QR Payments' },
-    { icon: '✉️', label: 'Digital Envelopes' },
-    { icon: '🧩', label: 'Mini Programs' },
-    { icon: '🍔', label: 'Online Food' },
-    { icon: '🎫', label: 'Ticket Bookings' },
-    { icon: '🚕', label: 'Cab Services' },
-    { icon: '📄', label: 'Bill Payments' },
-    { icon: '✂️', label: 'Split Bills' },
-    { icon: '🏛️', label: 'Official Accounts' },
-    { icon: '🪪', label: 'Digital IDs' },
-    { icon: '📜', label: 'License / Certificate' },
-    { icon: '📱', label: 'Phone Top-ups' },
-    { icon: '🎟️', label: 'Lottery Tickets' },
-    { icon: '🏥', label: 'Medical Services' },
-    { icon: '👮', label: 'Police Reports' },
-    { icon: '🎮', label: 'Gaming / Streams' },
-    { icon: '➕', label: 'Add Contacts' },
-  ];
+const services = [
+  { icon: '💬', label: 'Messaging' },           // Merged Instant Messaging + Group Chats
+  { icon: '📷', label: 'QR Payments' },
+  { icon: '✉️', label: 'Digital Envelopes' },
+  { icon: '🧩', label: 'Mini Programs' },
+  { icon: '🍔', label: 'Online Food' },
+  { icon: '🎫', label: 'Ticket Bookings' },
+  { icon: '🚕', label: 'Cab Services' },
+  { icon: '💰', label: 'Payments' },            // Merged Bill Payments + Phone Top-ups
+  { icon: '✂️', label: 'Split Bills' },
+  { icon: '🏛️', label: 'Official Accounts' },
+  { icon: '🪪', label: 'Digital IDs' },
+  { icon: '📜', label: 'License / Certificate' },
+  { icon: '🚨', label: 'Emergency' },           // Merged Medical + Police
+  { icon: '🎟️', label: 'Lottery Tickets' },
+  { icon: '🎮', label: 'Gaming / Streams' },
+  { icon: '➕', label: 'Add Contacts' },
+];
 
   if (!isLoggedIn) {
     return (
@@ -101,13 +94,13 @@ function App() {
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white pb-20">
       <header className="sticky top-0 z-50 bg-white/95 dark:bg-black/95 border-b border-black/10 dark:border-white/10 backdrop-blur-lg">
-        <div className="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">🌍</span>
-            <h1 className="text-2xl font-semibold tracking-tight">AFRIKA</h1>
-          </div>
-          <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-xl">
-            {theme === 'dark' ? '☀️' : '🌙'}
+     {/* Header without logo */}
+<div className="flex items-center justify-between">
+  <div></div> {/* Empty space on left */}
+  <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-xl">
+    {theme === 'dark' ? '☀️' : '🌙'}
+  </button>
+</div>            {theme === 'dark' ? '☀️' : '🌙'}
           </button>
         </div>
       </header>
@@ -202,15 +195,37 @@ function App() {
             { id: 'chat', icon: '💬', label: 'Chat' },
             { id: 'profile', icon: '👤', label: 'Profile' },
           ].map((tab) => (
-            <button key={tab.id} onClick={() => setActiveTab(tab.id as any)} className={`flex flex-col items-center px-8 transition-all ${activeTab === tab.id ? 'text-black dark:text-white' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}>
-              <span className="text-[22px] mb-px">{tab.icon}</span>
-              <span className="text-[10px] font-medium tracking-wide">{tab.label}</span>
-            </button>
-          ))}
-        </div>
-      </nav>
-    </div>
-  );
-}
+            {/* Bottom Navigation - 3 Icons Clean Design */}
+{/* Bottom Navigation - 3 Icons */}
+<nav className="fixed bottom-0 left-0 right-0 bg-black border-t border-white/10 z-50">
+  <div className="flex items-center justify-around py-3 px-8 max-w-md mx-auto">
+    
+    {/* Home */}
+    <button 
+      onClick={() => setActiveTab('home')}
+      className={`flex flex-col items-center text-white active:scale-95 transition-transform ${activeTab === 'home' ? 'text-emerald-400' : 'text-gray-400'}`}
+    >
+      <span className="text-3xl">🏠</span>
+      <span className="text-xs mt-1">Home</span>
+    </button>
 
-export default App;
+    {/* Chat */}
+    <button 
+      onClick={() => setActiveTab('chat')}
+      className={`flex flex-col items-center text-white active:scale-95 transition-transform ${activeTab === 'chat' ? 'text-emerald-400' : 'text-gray-400'}`}
+    >
+      <span className="text-3xl">💬</span>
+      <span className="text-xs mt-1">Chat</span>
+    </button>
+
+    {/* Profile */}
+    <button 
+      onClick={() => setActiveTab('profile')}
+      className={`flex flex-col items-center text-white active:scale-95 transition-transform ${activeTab === 'profile' ? 'text-emerald-400' : 'text-gray-400'}`}
+    >
+      <span className="text-3xl">👤</span>
+      <span className="text-xs mt-1">Profile</span>
+    </button>
+
+  </div>
+</nav>
